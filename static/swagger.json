@@ -1,0 +1,99 @@
+{
+    "swagger": "2.0",
+    "info": {
+      "version": "1.0.0",
+      "title": "Currency Exchange API",
+      "description": "API for managing currencies and exchange rates"
+    },
+    "paths": {
+      "/currency": {
+        "post": {
+          "summary": "Create a new currency",
+          "description": "",
+          "responses": {
+            "200": {
+              "description": "Currency created successfully"
+            },
+            "400": {
+              "description": "Currency already exists"
+            }
+          }
+        },
+        "get": {
+          "summary": "Get all currencies",
+          "description": "",
+          "responses": {
+            "200": {
+              "description": "A list of all currencies"
+            }
+          }
+        }
+      },
+      "/currency/{id}": {
+        "get": {
+          "summary": "Get a specific currency",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "type": "integer"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Currency details"
+            },
+            "404": {
+              "description": "Currency not found"
+            }
+          }
+        }
+      },
+      "/exchange_rate": {
+        "post": {
+          "summary": "Create a new exchange rate",
+          "description": "",
+          "responses": {
+            "200": {
+              "description": "Exchange rate created successfully"
+            },
+            "400": {
+              "description": "Exchange rate already exists"
+            }
+          }
+        },
+        "get": {
+          "summary": "Get all exchange rates",
+          "description": "",
+          "responses": {
+            "200": {
+              "description": "A list of all exchange rates"
+            }
+          }
+        }
+      },
+      "/exchange_rate/{id}": {
+        "get": {
+          "summary": "Get a specific exchange rate",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "type": "integer"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Exchange rate details"
+            },
+            "404": {
+              "description": "Exchange rate not found"
+            }
+          }
+        }
+      }
+    }
+  }
+  
