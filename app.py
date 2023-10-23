@@ -9,10 +9,14 @@ from src.routes.currency import currency_bp
 from src.routes.exchange_rate import exchange_rate_bp
 
 def create_app():
+    """
+    This is the factory function that creates the Flask app.
+    """
     app = Flask(__name__)
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///currency_db.db'
     db.init_app(app)
 
+    # Blueprints
     app.register_blueprint(currency_bp)
     app.register_blueprint(exchange_rate_bp)
 
@@ -50,4 +54,4 @@ if __name__ == '__main__':
     app = create_app()
     with app.app_context():
         db.create_all()
-    app.run(debug=True)
+    app.run(debug=True, host="0.0.0.0", port=5000)

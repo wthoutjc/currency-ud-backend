@@ -1,4 +1,4 @@
-from src.models.models import ExchangeRate, db
+from src.models.models import ExchangeRate, Currency, db
 from sqlalchemy.exc import IntegrityError
 
 class ExchangeRateService:
@@ -64,3 +64,29 @@ class ExchangeRateService:
             'from_currency_id': er.from_currency_id, 
             'to_currency_id': er.to_currency_id, 
             'rate': er.rate} for er in exchange_rates], 200
+    
+    # CONVERT CURRENCY
+    @staticmethod
+    def convert_currency(from_currency_id, to_currency_ids, amount):
+        from_currency = Currency.query.get(from_currency_id)
+        if from_currency is None:
+            return {'message': 'From currency not found!'}, 404
+
+        to_currencies = Currency.query.filter(Currency.currency_id.in_(to_currency_ids)).all()
+        if len(to_currencies) != len(to_currency_ids):
+            return {'message': 'One or more to currencies not found!'}, 404
+
+        conversions = []
+        for to_currency in to_currencies:
+            exchange_rate = ExchangeRate.query.filter_by(from_currency_id=from_currency_id, to_currency_id=to_currency.currency_id).first()
+            if exchange_rate is None:
+                return {'message': f'Exchange rate from {from_currency.code} to {to_currency.code} not found!'}, 404
+
+            converted_amount = amount * exchange_rate.rate
+            conversions.append({
+                'from': from_currency.code,
+                'to': to_currency.code,
+                'amount': converted_amount
+            })
+
+        return conversions, 200

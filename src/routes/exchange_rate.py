@@ -31,3 +31,13 @@ def exchange_rate_route(id):
             return make_response(jsonify(response), status_code)
 
     return make_response(jsonify({'message': 'Method not allowed!'}), 405)
+
+# Currency conversion
+@exchange_rate_bp.route('/convert', methods=['POST'])
+def convert_route():
+    data = request.get_json()
+    from_currency_id = data['from']
+    to_currency_ids = data['to']
+    amount = data['amount']
+    response, status_code = ExchangeRateService.convert_currency(from_currency_id, to_currency_ids, amount)
+    return make_response(jsonify(response), status_code)
