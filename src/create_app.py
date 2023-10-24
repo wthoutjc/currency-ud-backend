@@ -12,16 +12,24 @@ from src.models.models import db
 
 SECRET_KEY = config('SECRET_KEY')
 
+# DB - MySQL
+HOST = config('DATABASE_HOST')
+USERNAME = config('DATABASE_USERNAME')
+PASSWORD = config('DATABASE_PASSWORD')
+DATABASE = config('DATABASE')
+
 def create_app():
     """
     This is the factory function that creates the Flask app.
     """
     app = Flask(__name__)
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///currency_db.db'
+    app.config['SQLALCHEMY_DATABASE_URI'] = f'mysql+mysqlconnector://{USERNAME}:{PASSWORD}@{HOST}/{DATABASE}'
+
     app.config['SECRET_KEY'] = SECRET_KEY
     # TODO: AUTH JWT - SECRET_KEY
-    db.init_app(app)
 
+    db.init_app(app)
+    
     # Blueprints
     app.register_blueprint(currency_bp)
     app.register_blueprint(exchange_rate_bp)

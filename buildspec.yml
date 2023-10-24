@@ -10,6 +10,7 @@ phases:
       - aws --version
       - aws ecr get-login-password --region sa-east-1 | docker login --username AWS --password-stdin 393455371269.dkr.ecr.sa-east-1.amazonaws.com
       - REPOSITORY_URI=393455371269.dkr.ecr.sa-east-1.amazonaws.com/currency-repo
+      - yum install -y gcc mysql-devel python3-devel
       - pip install --upgrade aws-sam-cli
   build:
     commands:

@@ -12,7 +12,6 @@ from src.create_app import create_app
 # Must for prod
 # Update the SQLite database file path to use /tmp
 app = create_app()
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////tmp/instance/currency_db.db'
 
 # Lambda handler
 def lambda_handler(event, context):
