@@ -9,7 +9,7 @@ Este proyecto es un servicio de conversión de divisas construido con Flask, SQL
 
 1. **Clonar el repositorio**
     ```
-    git clone https://github.com/your-repository-url
+    git clone https://github.com/wthoutjc/currency-ud-backend
     ```
 
 2. **Crear un entorno virtual (opcional)**
@@ -23,19 +23,9 @@ Este proyecto es un servicio de conversión de divisas construido con Flask, SQL
     pip install -r requirements.txt
     ```
 
-4. **Establecer la variable de entorno FLASK_APP**
+4. **Ejecutar la aplicación**
     ```
-    export FLASK_APP=app.py  # En Windows, usa `set FLASK_APP=app.py`
-    ```
-
-5. **Ejecutar las migraciones de la base de datos**
-    ```
-    flask db upgrade
-    ```
-
-6. **Ejecutar la aplicación**
-    ```
-    flask run
+    python app.py
     ```
 
 Ahora puedes acceder a la aplicación en tu navegador en `http://localhost:5000`.
@@ -49,3 +39,29 @@ Ahora puedes acceder a la aplicación en tu navegador en `http://localhost:5000`
 Para más detalles sobre estos endpoints, consulta la documentación de la API en Swagger UI en `http://localhost:5000/api/docs`.
 
 ¡Espero que disfrutes del proyecto! Si tienes alguna pregunta o sugerencia, no dudes en ponerse en contacto.
+
+## Extras
+
+1. Frontend
+
+Se utilizó Next.js 13+ con Typescript para poder crear una UI interactiva que consuma los servicios de esta API.
+
+Puedes acceder a los recursos en:
+
+- Accede al repositorio Frontend [aquí](https://github.com/wthoutjc/currency-ud-frontend).
+
+- Accede al stage de producción [aquí]()
+
+2. AWS
+
+Se utilizó AWS (Lambda, CodePipeline & CodeBuild, S3) para poder crear un entorno de despligue a producción con CI/CD.
+
+Puedes acceder a los recursos en:
+
+- Accede al endpoint en stage de producción  [aquí](https://o69lfswzia.execute-api.sa-east-1.amazonaws.com/Prod/currency).
+
+3. Swagger & Pytest
+
+Se utilizó Swagger para documentar los diferentes endpoints y pytest para realizar unitesting a los diferentes endpoints.
+
+Nota: Por el momento solo está disponible los endpoints documentados en Swagger, root-endpoint no disponible.
