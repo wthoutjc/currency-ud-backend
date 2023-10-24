@@ -39,12 +39,8 @@ def currency_route(id: int):
         return make_response(jsonify(response), status_code)
 
     elif request.method == 'GET':
-        if id is not None:
-            response, status_code = CurrencyService.get_currency(id)
-            return make_response(jsonify(response), status_code)
-        else:
-            response, status_code = CurrencyService.get_all_currencies()
-            return make_response(jsonify(response), status_code)
+        response, status_code = CurrencyService.get_currency(id) if id is not None else CurrencyService.get_all_currencies()
+        return make_response(jsonify(response), status_code)
 
     elif request.method == 'PUT':
         data = request.get_json()

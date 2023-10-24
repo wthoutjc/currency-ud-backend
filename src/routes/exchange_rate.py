@@ -38,12 +38,8 @@ def exchange_rate_route(id):
         return make_response(jsonify(response), status_code)
 
     elif request.method == 'GET':
-        if id is not None:
-            response, status_code = ExchangeRateService.get_exchange_rate(id)
-            return make_response(jsonify(response), status_code)
-        else:
-            response, status_code = ExchangeRateService.get_all_exchange_rates()
-            return make_response(jsonify(response), status_code)
+        response, status_code = ExchangeRateService.get_exchange_rate(id) if id else ExchangeRateService.get_all_exchange_rates()
+        return make_response(jsonify(response), status_code)
     
     elif request.method == 'PUT':
         data = request.get_json()
