@@ -64,9 +64,71 @@ class ExchangeRateService:
             'from_currency_id': er.from_currency_id, 
             'to_currency_id': er.to_currency_id, 
             'rate': er.rate} for er in exchange_rates], 200
+
+    @staticmethod
+    def update_exchange_rate(id: int, data: dict):
+        """
+        This is the update_exchange_rate method.
+        ---
+        parameters:
+        - id (int) : The id of the exchange_rate to be updated.
+        - data (dict) : The data of the exchange_rate to be updated.
+        responses:
+        200:
+            description: The exchange_rate was successfully updated.
+        404:
+            description: The exchange_rate was not found.
+        """
+        exchange_rate = ExchangeRate.query.get(id)
+        if exchange_rate is None:
+            return {'message': 'Exchange rate not found!'}, 404
+
+        if 'from_currency_id' in data:
+            exchange_rate.from_currency_id = data['from_currency_id']
+        if 'to_currency_id' in data:
+            exchange_rate.to_currency_id = data['to_currency_id']
+        if 'rate' in data:
+            exchange_rate.rate = data['rate']
+
+        db.session.commit()
+        return {'message': 'Exchange rate updated successfully!'}, 200
+
+    @staticmethod
+    def delete_exchange_rate(id: int):
+        """
+        This is the delete_exchange_rate method.
+        ---
+        parameters:
+        - id (int) : The id of the exchange_rate to be deleted.
+        responses:
+        200:
+            description: The exchange_rate was successfully deleted.
+        404:
+            description: The exchange_rate was not found.
+        """
+        exchange_rate = ExchangeRate.query.get(id)
+        if exchange_rate is None:
+            return {'message': 'Exchange rate not found!'}, 404
+
+        db.session.delete(exchange_rate)
+        db.session.commit()
+        return {'message': 'Exchange rate deleted successfully!'}, 200
     
     @staticmethod
     def convert_currency(from_currency_id: int, to_currency_ids: list, amount: float):
+        """
+        This is the convert_currency method.
+        ---
+        parameters:
+        - from_currency_id (int) : The id of the currency to convert from.
+        - to_currency_ids (list) : The ids of the currencies to convert to.
+        - amount (float) : The amount to convert.
+        responses:
+        200:
+            description: The conversion was successful.
+        404:
+            description: One or more currencies not found.
+        """
         from_currency = Currency.query.get(from_currency_id)
         if from_currency is None:
             return {'message': 'From currency not found!'}, 404

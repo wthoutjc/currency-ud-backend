@@ -9,7 +9,7 @@ exchange_rate_schema = ExchangeRateSchema()
 convert_schema = ConvertSchema()
 
 @exchange_rate_bp.route('/exchange_rate', defaults={"id": None}, methods=['POST', 'GET'])
-@exchange_rate_bp.route('/exchange_rate/<int:id>', methods=['GET'])
+@exchange_rate_bp.route('/exchange_rate/<int:id>', methods=['GET', 'PUT', 'DELETE'])
 def exchange_rate_route(id):
     """
     This is the exchange_rate endpoint
@@ -44,6 +44,21 @@ def exchange_rate_route(id):
         else:
             response, status_code = ExchangeRateService.get_all_exchange_rates()
             return make_response(jsonify(response), status_code)
+    
+    elif request.method == 'PUT':
+        data = request.get_json()
+
+        # Validate the data
+        errors = exchange_rate_schema.validate(data)
+        if errors:
+            return make_response(jsonify(errors), 400)
+
+        response, status_code = ExchangeRateService.update_exchange_rate(id, data)
+        return make_response(jsonify(response), status_code)
+
+    elif request.method == 'DELETE':
+        response, status_code = ExchangeRateService.delete_exchange_rate(id)
+        return make_response(jsonify(response), status_code)
 
     return make_response(jsonify({'message': 'Method not allowed!'}), 405)
 

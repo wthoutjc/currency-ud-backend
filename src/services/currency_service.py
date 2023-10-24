@@ -56,3 +56,27 @@ class CurrencyService:
         """
         currencies = Currency.query.all()
         return [{'id': c.currency_id, 'code': c.code, 'name': c.name} for c in currencies], 200
+
+    @staticmethod
+    def update_currency(id, data):
+        currency = Currency.query.get(id)
+        if currency is None:
+            return {'message': 'Currency not found!'}, 404
+
+        if 'code' in data:
+            currency.code = data['code']
+        if 'name' in data:
+            currency.name = data['name']
+
+        db.session.commit()
+        return {'message': 'Currency updated successfully!'}, 200
+
+    @staticmethod
+    def delete_currency(id):
+        currency = Currency.query.get(id)
+        if currency is None:
+            return {'message': 'Currency not found!'}, 404
+
+        db.session.delete(currency)
+        db.session.commit()
+        return {'message': 'Currency deleted successfully!'}, 200
