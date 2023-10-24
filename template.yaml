@@ -1,0 +1,21 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: Serverless currency API
+
+Globals:
+  Function:
+    Timeout: 300
+
+Resources:
+  CurrencyFunction:
+    Type: AWS::Serverless::Function 
+    Properties:
+      CodeUri: .
+      Handler: app.lambda_handler
+      Runtime: python3.9
+      Events:
+        Currency:
+          Type: Api 
+          Properties:
+            Path: /{proxy+}
+            Method: ANY

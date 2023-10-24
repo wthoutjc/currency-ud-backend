@@ -1,0 +1,27 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      python: 3.9
+    commands:
+      - echo Installing dependencies...
+      - echo Logging in to Amazon ECR...
+      - aws --version
+      - aws ecr get-login-password --region sa-east-1 | docker login --username AWS --password-stdin 393455371269.dkr.ecr.sa-east-1.amazonaws.com
+      - REPOSITORY_URI=393455371269.dkr.ecr.sa-east-1.amazonaws.com/currency-repo
+      - pip install --upgrade aws-sam-cli
+  build:
+    commands:
+      - echo Build started on `date`
+      - docker build --rm -t $REPOSITORY_URI:currency-service .
+      - docker tag $REPOSITORY_URI:currency-service $REPOSITORY_URI:currency-service
+      - sam build --use-container --build-image $REPOSITORY_URI:currency-service
+  post_build:
+    commands:
+      - echo Build completed on `date`
+      - echo Pushing the Docker images...
+      - docker push $REPOSITORY_URI:currency-service
+      - sam package --output-template-file packaged.yaml --image-repository $REPOSITORY_URI --region sa-east-1 --s3-bucket lambda-currency
+      - aws cloudformation deploy --template-file packaged.yaml --stack-name currency-service --capabilities CAPABILITY_IAM --region sa-east-1
+
