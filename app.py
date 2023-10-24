@@ -15,6 +15,7 @@ app = create_app()
 
 # Lambda handler
 def lambda_handler(event, context):
+    # Fix for AWS Lambda + API Gateway
     event['headers']['wsgi.url_scheme'] = 'https'
     return app(event, context)
 
