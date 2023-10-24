@@ -2,6 +2,7 @@ from decouple import config
 
 from flask import Flask, render_template
 from flask_swagger_ui import get_swaggerui_blueprint
+from flask_cors import CORS
 
 # Routes
 from src.routes.currency import currency_bp
@@ -27,6 +28,9 @@ def create_app():
 
     app.config['SECRET_KEY'] = SECRET_KEY
     # TODO: AUTH JWT - SECRET_KEY
+
+    # CORS
+    CORS(app)
 
     db.init_app(app)
     

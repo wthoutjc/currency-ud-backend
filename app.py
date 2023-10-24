@@ -1,3 +1,4 @@
+import awsgi
 import os
 from decouple import config
 
@@ -8,17 +9,11 @@ time_zone = config('TZ')
 os.environ['TZ'] = time_zone
 
 from src.create_app import create_app
-
-# Must for prod
-# Update the SQLite database file path to use /tmp
 app = create_app()
 
 # Lambda handler
 def lambda_handler(event, context):
-    # Fix for AWS Lambda + API Gateway
-    if 'headers' in event and 'wsgi.url_scheme' in event['headers']:
-        event['headers']['wsgi.url_scheme'] = 'https'
-    return app(event, context)
+    return awsgi.response(app, event, context, base64_content_types={"image/png"})
 
 if __name__ == '__main__':
     with app.app_context():
