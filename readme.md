@@ -5,6 +5,8 @@
 
 Este proyecto es un servicio de conversión de divisas construido con Flask, SQLAlchemy y SQLite.
 
+- Sustentación en video - [aquí](https://youtu.be/wgvkPq1hAvo).
+
 ## Cómo ejecutar el proyecto
 
 1. **Clonar el repositorio**
