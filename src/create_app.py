@@ -1,6 +1,7 @@
 from decouple import config
 
-from flask import Flask, render_template
+from flask import render_template
+from flask_lambda import FlaskLambda
 from flask_swagger_ui import get_swaggerui_blueprint
 
 # Routes
@@ -22,7 +23,7 @@ def create_app():
     """
     This is the factory function that creates the Flask app.
     """
-    app = Flask(__name__)
+    app = FlaskLambda(__name__)
     app.config['SQLALCHEMY_DATABASE_URI'] = f'mysql+mysqlconnector://{USERNAME}:{PASSWORD}@{HOST}/{DATABASE}'
 
     app.config['SECRET_KEY'] = SECRET_KEY
