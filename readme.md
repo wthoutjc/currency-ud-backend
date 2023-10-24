@@ -51,6 +51,7 @@ Puedes acceder a los recursos en:
 - Accede al repositorio Frontend [aquí](https://github.com/wthoutjc/currency-ud-frontend).
 
 - Accede al stage de producción [aquí](https://currency-ud-wthoutjc.vercel.app/)
+- Link secundario stage prod [aquí](https://main.d31ipbj5l777pl.amplifyapp.com/)
 
 2. AWS
 
