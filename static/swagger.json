@@ -48,6 +48,53 @@
             "description": "Currency not found"
           }
         }
+      },
+      "put": {
+        "summary": "Update a specific currency",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "code",
+            "in": "body",
+            "description": "The new code of the currency",
+            "type": "string"
+          },
+          {
+            "name": "name",
+            "in": "body",
+            "description": "The new name of the currency",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Currency updated successfully"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete a specific currency",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Currency deleted successfully"
+          },
+          "404": {
+            "description": "Currency not found"
+          }
+        }
       }
     },
     "/exchange_rate": {
@@ -87,6 +134,60 @@
         "responses": {
           "200": {
             "description": "Exchange rate details"
+          },
+          "404": {
+            "description": "Exchange rate not found"
+          }
+        }
+      },
+      "put": {
+        "summary": "Update a specific exchange rate",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "from_currency_id",
+            "in": "body",
+            "description": "The new ID of the currency to convert from",
+            "type": "integer"
+          },
+          {
+            "name": "to_currency_id",
+            "in": "body",
+            "description": "The new ID of the currency to convert to",
+            "type": "integer"
+          },
+          {
+            "name": "rate",
+            "in": "body",
+            "description": "The new exchange rate",
+            "type": "number",
+            "format": "double"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Exchange rate updated successfully"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete a specific exchange rate",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Exchange rate deleted successfully"
           },
           "404": {
             "description": "Exchange rate not found"
