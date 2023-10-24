@@ -3,7 +3,7 @@ from sqlalchemy.exc import IntegrityError
 
 class CurrencyService:
     @staticmethod
-    def create_currency(data):
+    def create_currency(data: dict):
         """
         This is the create_currency method.
         ---
@@ -25,7 +25,7 @@ class CurrencyService:
             return {'message': 'Currency already exists!'}, 400
 
     @staticmethod
-    def get_currency(id):
+    def get_currency(id: int):
         """
         This is the get_currency method.
         ---

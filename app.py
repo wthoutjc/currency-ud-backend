@@ -1,3 +1,6 @@
+import os
+from decouple import config
+
 from flask import Flask, render_template
 from flask_swagger_ui import get_swaggerui_blueprint
 
@@ -8,12 +11,18 @@ from src.models.models import db
 from src.routes.currency import currency_bp
 from src.routes.exchange_rate import exchange_rate_bp
 
+SECRET_KEY = config('SECRET_KEY')
+time_zone = config('TZ')
+os.environ['TZ'] = time_zone
+
 def create_app():
     """
     This is the factory function that creates the Flask app.
     """
     app = Flask(__name__)
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///currency_db.db'
+    app.config['SECRET_KEY'] = SECRET_KEY
+    # TODO: AUTH JWT - SECRET_KEY
     db.init_app(app)
 
     # Blueprints

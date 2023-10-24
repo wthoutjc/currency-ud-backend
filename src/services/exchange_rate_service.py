@@ -3,7 +3,7 @@ from sqlalchemy.exc import IntegrityError
 
 class ExchangeRateService:
     @staticmethod
-    def create_exchange_rate(data):
+    def create_exchange_rate(data: dict):
         """
         This is the create_exchange_rate method.
         ---
@@ -25,7 +25,7 @@ class ExchangeRateService:
             return {'message': 'Exchange rate already exists!'}, 400
 
     @staticmethod
-    def get_exchange_rate(id):
+    def get_exchange_rate(id: int):
         """
         This is the get_exchange_rate method.
         ---
@@ -65,9 +65,8 @@ class ExchangeRateService:
             'to_currency_id': er.to_currency_id, 
             'rate': er.rate} for er in exchange_rates], 200
     
-    # CONVERT CURRENCY
     @staticmethod
-    def convert_currency(from_currency_id, to_currency_ids, amount):
+    def convert_currency(from_currency_id: int, to_currency_ids: list, amount: float):
         from_currency = Currency.query.get(from_currency_id)
         if from_currency is None:
             return {'message': 'From currency not found!'}, 404
@@ -86,7 +85,7 @@ class ExchangeRateService:
             conversions.append({
                 'from': from_currency.code,
                 'to': to_currency.code,
-                'amount': converted_amount
+                'amount': converted_amount,
             })
 
         return conversions, 200
